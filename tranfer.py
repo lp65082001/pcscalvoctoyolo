@@ -1,10 +1,11 @@
 import os
 import re
 import numpy as np
+import time
 
 
 dist = np.array(["class1","class2"])
-path="path"    
+path="./"    
 
 
 fileList=os.listdir(path)
@@ -12,15 +13,19 @@ temp = re.compile("([a-zA-Z]+)([0-9+]+)")
 n=0
 for i in (fileList):
     oldname=path+ os.sep + fileList[n] 
-    f1 = open(oldname[0:-3]+"txt", 'w')
-    if (fileList[n][-3:-1]=="xm"):
-
+    
+    if (fileList[n][-3:-1]=="xm"): 
+        f1 = open(oldname[0:-3]+"txt", 'w')
+        print(fileList[n])
+        num2 = 0
         with open(oldname) as f:
             for line in f.readlines():
                 a = re.split("\t|<|>",line)   
+    
                 if (len(a)>6):
-                    num2 = 0       
-                    if (a[3]=="name"):      
+                    #num2 = 0       
+                    if (a[3]=="name"):
+                        #print(a[4])
                         name = np.where(dist == temp.match(a[4]).groups()[0])[0][0]
                         #detect the multi-classes
                         #if (name == 1):
@@ -49,7 +54,9 @@ for i in (fileList):
                             print(oldname)
                     
                         f1.write(str(name)+" "+str(coodx)+" "+str(coody)+" "+str(width)+" "+str(height)+"\n")    
-    f1.close()
-
+                        num2 = 0
+        f1.close()
+    #time.sleep(1)
     n+=1
+
 print("done")
